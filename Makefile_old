@@ -1,0 +1,21 @@
+CC := g++
+CFLAGS := -Wall -std=c++11 -pthread -g $(INCS)
+CXXFLAGS = -Wall -std=c++11 -pthread -g $(INCS)
+SRC := MapReduceFramework.cpp MapReduceClient.cpp
+OBJ := $(SRC:.cpp=.o)
+LIB := libMapReduceFramework.a
+
+PHONY: all clean
+
+all: $(LIB)
+
+$(LIB): $(OBJ)
+	ar rcs $@ $^
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ): MapReduceFramework.h MapReduceClient.h
+
+clean:
+	rm -f $(OBJ) $(LIB)
